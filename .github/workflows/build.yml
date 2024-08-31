@@ -1,4 +1,4 @@
-name: Build/Release
+name: Build/Release for ${{ matrix.os }}-${{ matrix.architecture }}
 
 on: push
 
@@ -8,8 +8,15 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        arch: ['--x64', '--arm64']
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        node_version:
+          - current
+        architecture:
+          - x64
+          - arm64
 
     steps:
       - name: Check out Git repository
@@ -18,10 +25,8 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts'
-          yarn-version: 'latest'
-          npm-version: 'latest'
-          cache: 'npm'
+          node-version: ${{ matrix.node_version }}
+          cache: ${{ matrix.package_manager }}
 
       - name: Build/Release Electron app
         uses: imyanice/action-electron-builder@v1.7.0
