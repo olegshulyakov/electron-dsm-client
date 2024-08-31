@@ -1,57 +1,56 @@
 {
-  "name": "electron-audiostation",
-  "version": "2.0.0",
-  "description": "A Synology AudioStation client run on macOS and Windows.",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "electron:linux": "electron-builder build --linux",
-    "electron:windows": "electron-builder build --windows",
-    "electron:mac": "electron-builder build --mac"
-  },
-  "author": {
-    "name": "milkfish",
-    "email": "i@mxd.moe",
-    "url": "https://www.milkfish.site"
-  },
-  "license": "GPL-3.0",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sdjnmxd/electron-audiostation.git"
-  },
-  "devDependencies": {
-    "electron": "^15.3.0",
-    "electron-builder": "^22.14.5"
-  },
-  "build": {
-    "appId": "moe.mxd.Electron-AudioStation",
-    "productName": "Electron AudioStation",
-    "copyright": "milkfish",
-    "directories": {
-      "output": "release/"
+    "name": "electron-dsm-client",
+    "version": "1.0.0",
+    "description": "A Synology Disk Station Manager client run on macOS and Windows.",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron .",
+        "electron:linux": "electron-builder build --linux",
+        "electron:windows": "electron-builder build --windows",
+        "electron:mac": "electron-builder build --mac"
     },
-    "win": {
-      "icon": "assets/icon.png",
-      "target": [
-        "portable",
-        "nsis"
-      ]
+    "author": {
+        "name": "Oleg Shulyakov",
+        "url": "https://github.com/olegshulyakov"
     },
-    "mac": {
-      "icon": "assets/icon.png",
-      "target": [
-        "dmg"
-      ]
+    "license": "GPL-3.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/olegshulyakov/electron-dsm-client.git"
     },
-    "linux": {
-      "icon": "assets/icon.png",
-      "target": [
-        "rpm"
-      ]
+    "dependencies": {
+        "electron-store": "^8.0.1",
+        "electron-prompt": "^1.7.0"
+    },
+    "devDependencies": {
+        "electron": "^15.3.0",
+        "electron-builder": "^22.14.5"
+    },
+    "build": {
+        "appId": "org.electronjs.dsm-client",
+        "productName": "Electron Disk Station Manager",
+        "copyright": "olegshulyakov",
+        "directories": {
+            "output": "release/"
+        },
+        "win": {
+            "icon": "assets/icon.png",
+            "target": [
+                "portable",
+                "nsis"
+            ]
+        },
+        "mac": {
+            "icon": "assets/icon.png",
+            "target": [
+                "dmg"
+            ]
+        },
+        "linux": {
+            "icon": "assets/icon.png",
+            "target": [
+                "rpm"
+            ]
+        }
     }
-  },
-  "dependencies": {
-    "electron-store": "^8.0.1",
-    "electron-prompt": "^1.7.0"
-  }
 }
