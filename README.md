@@ -1,6 +1,4 @@
-<img src="assets/icon.svg" alt="logo" height="256" align="right" />
-
-# Electron Disk Station Manager
+# Electron Disk Station Manager Client
 
 A Synology Disk Station Manager client run on macOS and Windows, built with Electron.
 
