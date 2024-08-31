@@ -18,7 +18,7 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/-n'
+          node-version: 'lts'
           yarn-version: 'latest'
           npm-version: 'latest'
           cache: 'npm'
