@@ -1,9 +1,11 @@
-name: Build/Release for ${{ matrix.os }}-${{ matrix.architecture }}
+name: Build
 
 on: push
 
 jobs:
   release:
+    name: Build for ${{ matrix.os }}-${{ matrix.architecture }}
+
     runs-on: ${{ matrix.os }}
 
     strategy:
