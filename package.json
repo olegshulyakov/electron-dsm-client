@@ -49,7 +49,10 @@
     },
     "linux": {
       "icon": "assets/icon.png",
+      "category": "Network",
       "target": [
+        "tar.gz",
+        "deb",
         "rpm"
       ]
     }
