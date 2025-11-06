@@ -1,0 +1,26 @@
+{
+  "name": "@electron-dsm-client/shared",
+  "version": "1.0.0",
+  "description": "Shared utilities for Electron DSM Client",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "electron",
+    "synology",
+    "shared"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^39.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
+  }
+}

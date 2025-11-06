@@ -1,14 +1,28 @@
 {
-  "name": "electron-dsm-client",
+  "name": "electron-client-monorepo",
   "version": "1.0.0",
-  "description": "A Synology Disk Station Manager client run on macOS and Windows.",
-  "main": "main.js",
+  "description": "Electron wrapper applications",
+  "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "shared"
+  ],
   "scripts": {
-    "start": "electron .",
-    "electron:linux": "electron-builder build --linux",
-    "electron:windows": "electron-builder build --windows",
-    "electron:mac": "electron-builder build --mac"
+    "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspaces --if-present",
+    "dist": "npm run dist --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "rm -rf node_modules && npm run clean --workspaces --if-present"
   },
+  "keywords": [
+    "electron",
+    "synology",
+    "dsm",
+    "audio",
+    "photos",
+    "wrapper"
+  ],
   "author": {
     "name": "Oleg Shulyakov",
     "email": "olegshulyakov@users.noreply.github.com",
@@ -18,40 +32,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/olegshulyakov/electron-dsm-client.git"
-  },
-  "dependencies": {
-    "electron-store": "^8.2.0",
-    "electron-prompt": "^1.7.0"
-  },
-  "devDependencies": {
-    "electron": "^31.4.0",
-    "electron-builder": "^24.13.3"
-  },
-  "build": {
-    "appId": "org.electronjs.dsm-client",
-    "productName": "Electron Disk Station Manager",
-    "copyright": "olegshulyakov",
-    "directories": {
-      "output": "release/"
-    },
-    "win": {
-      "icon": "assets/icon.png",
-      "target": [
-        "portable",
-        "nsis"
-      ]
-    },
-    "mac": {
-      "icon": "assets/icon.png",
-      "target": [
-        "dmg"
-      ]
-    },
-    "linux": {
-      "icon": "assets/icon.png",
-      "target": [
-        "rpm"
-      ]
-    }
   }
 }

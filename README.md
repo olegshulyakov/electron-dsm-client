@@ -1,23 +1,111 @@
-# Electron Disk Station Manager Client
+# Electron DSM Client Monorepo
 
-A Synology Disk Station Manager client run on macOS and Windows, built with Electron.
+A monorepo containing Electron wrapper applications for Synology services: DSM, Audio Station, and Photos.
 
-![preview](https://www.synology.com/img/dsm/overview/dsm_7_2_is_here_ui.png)
+## Project Structure
 
-# Feature
+```
+electron-dsm-client/
+├── package.json              # Root package with workspaces configuration
+├── tsconfig.json            # Root TypeScript configuration
+├── apps/
+│   ├── dsm/                 # Synology DSM wrapper application
+│   ├── audio/               # Synology Audio Station wrapper application
+│   └── photos/              # Synology Photos wrapper application
+└── shared/                  # Shared utilities and services
+```
 
-- shortcut: `CommandOrControl+E: Edit the configuration`
+Each application follows the same structure:
 
-**Important**: The following accelerators will not be registered successfully on macOS 10.14 Mojave unless the app has been authorized as a [trusted accessibility client](https://developer.apple.com/library/archive/documentation/Accessibility/Conceptual/AccessibilityMacOSX/OSXAXTestingApps.html)
+- `main.ts` - Main process code
+- `preload.ts` - Preload script for security
+- `index.html` - Basic UI for authentication
+- `package.json` - Application-specific dependencies and build scripts
+- `tsconfig.json` - TypeScript configuration
 
-# How To Use
+## Features
 
-1. Download installer from [release](https://github.com/olegshulyakov/electron-dsm-client/releases)
-2. Install
-3. Run
-4. Fill in the url as prompted
-5. Enjoy it !
+- **Electron Wrapper**: Provides native application experience for Synology web services
+- **Secure Storage**: Uses Electron's `safeStorage` to securely store user credentials
+- **Cross-platform**: Builds for Windows, macOS, and Linux
+- **Monorepo**: Managed with npm workspaces for efficient development
 
-### License GPL-3.0
+## Prerequisites
 
-**Electron Disk Station Manager is released by this open source project. While Synology Disk Station Manager Web is a component in the Synology DSM, it should be noted that this is a community release and not an official Synology Disk Station Manager release.**
+- Node.js (v16 or higher)
+- npm (v7 or higher)
+
+## Getting Started
+
+1. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+2. **Build the shared library:**
+
+   ```bash
+   cd shared
+   npm run build
+   cd ..
+   ```
+
+3. **Build an application (e.g., DSM):**
+   ```bash
+   cd apps/dsm
+   npm run build
+   npm start
+   ```
+
+## Development
+
+### Building All Applications
+
+Use the provided build script:
+
+```bash
+chmod +x scripts/build.sh
+./scripts/build.sh
+```
+
+### Running in Development Mode
+
+```bash
+# For DSM app
+cd apps/dsm
+npm run dev
+
+# For Audio app
+cd apps/audio
+npm run dev
+
+# For Photos app
+cd apps/photos
+npm run dev
+```
+
+### Distribution
+
+Create distributable packages:
+
+```bash
+chmod +x scripts/dist.sh
+./scripts/dist.sh
+```
+
+## Security
+
+The application uses Electron's `safeStorage` API to securely encrypt user credentials on supported platforms (Windows and macOS). On Linux, where `safeStorage` is not available, consider alternative secure storage solutions.
+
+## Configuration
+
+Each application can be configured by modifying:
+
+- The application's `package.json` for build settings
+- The main process file (`main.ts`) for window configuration
+- The renderer process files (`index.html`, preload scripts) for UI and functionality
+
+## License
+
+GPL-3.0

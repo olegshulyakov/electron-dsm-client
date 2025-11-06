@@ -1,0 +1,52 @@
+{
+  "name": "@electron-dsm-client/audio",
+  "version": "1.0.0",
+  "description": "Electron wrapper for Synology Audio Station",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "tsc",
+    "dist": "electron-builder --dir",
+    "dist:all": "electron-builder",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "electron",
+    "synology",
+    "audio"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@electron-dsm-client/shared": "^1.0.0",
+    "electron": "^39.1.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^26.0.12",
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3"
+  },
+  "build": {
+    "appId": "com.synology.audio",
+    "productName": "Synology Audio",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.music"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Audio"
+    }
+  }
+}
