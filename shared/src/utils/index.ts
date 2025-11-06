@@ -1,15 +1,12 @@
-import { app, BrowserWindow, screen } from 'electron';
-import * as path from 'path';
+import { app, BrowserWindow, screen } from "electron";
+import * as path from "path";
 
 /**
  * Utility function to create a browser window with standard configuration
  */
-export function createStandardWindow(
-  windowName: string,
-  options: Electron.BrowserWindowConstructorOptions = {}
-): BrowserWindow {
+export function createStandardWindow(windowName: string, options: Electron.BrowserWindowConstructorOptions = {}): BrowserWindow {
   const { width = 1200, height = 800 } = options;
-  
+
   // Get the primary display
   const primaryDisplay = screen.getPrimaryDisplay();
   const { width: screenWidth, height: screenHeight } = primaryDisplay.workArea;
@@ -27,17 +24,17 @@ export function createStandardWindow(
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
-      preload: path.join(__dirname, 'preload.js'),
-      ...options.webPreferences
+      preload: path.join(__dirname, "preload.js"),
+      ...options.webPreferences,
     },
-    icon: path.join(__dirname, '../assets/icon.png'), // We'll add this later
+    icon: path.join(__dirname, "../assets/icon.png"), // We'll add this later
     show: false,
     resizable: true,
-    ...options
+    ...options,
   };
 
   const window = new BrowserWindow(windowOptions);
-  window.setBackgroundColor('#f0f0f0'); // Set a default background color
+  window.setBackgroundColor("#f0f0f0"); // Set a default background color
 
   return window;
 }
@@ -46,7 +43,7 @@ export function createStandardWindow(
  * Utility function to get user data path for a specific app
  */
 export function getAppDataPath(appName: string): string {
-  return path.join(app.getPath('userData'), appName);
+  return path.join(app.getPath("userData"), appName);
 }
 
 /**
@@ -65,7 +62,7 @@ export function isValidUrl(input: string): boolean {
  * Utility function to normalize URL
  */
 export function normalizeUrl(input: string): string {
-  if (!input.startsWith('http://') && !input.startsWith('https://')) {
+  if (!input.startsWith("http://") && !input.startsWith("https://")) {
     return `https://${input}`;
   }
   return input;

@@ -1,6 +1,6 @@
-import { safeStorage, app } from 'electron';
-import * as path from 'path';
-import * as fs from 'fs';
+import { safeStorage, app } from "electron";
+import * as path from "path";
+import * as fs from "fs";
 
 export interface SecureCredentials {
   username: string;
@@ -14,10 +14,10 @@ export interface SecureCredentials {
 export class SecureStorageService {
   private static instance: SecureStorageService;
   private credentialsPath: string;
-  
+
   private constructor() {
-    const userDataPath = app.getPath('userData');
-    this.credentialsPath = path.join(userDataPath, 'credentials.json');
+    const userDataPath = app.getPath("userData");
+    this.credentialsPath = path.join(userDataPath, "credentials.json");
   }
 
   public static getInstance(): SecureStorageService {
@@ -34,7 +34,7 @@ export class SecureStorageService {
     try {
       // Check if safeStorage is available (only available on macOS and Windows)
       if (!safeStorage.isEncryptionAvailable()) {
-        throw new Error('Encryption is not available on this platform');
+        throw new Error("Encryption is not available on this platform");
       }
 
       // Encrypt the credentials
@@ -44,7 +44,7 @@ export class SecureStorageService {
       // Store the encrypted credentials
       fs.writeFileSync(this.credentialsPath, encryptedCredentials);
     } catch (error) {
-      console.error('Error storing credentials:', error);
+      console.error("Error storing credentials:", error);
       throw error;
     }
   }
@@ -56,7 +56,7 @@ export class SecureStorageService {
     try {
       // Check if safeStorage is available
       if (!safeStorage.isEncryptionAvailable()) {
-        throw new Error('Encryption is not available on this platform');
+        throw new Error("Encryption is not available on this platform");
       }
 
       // Check if credentials file exists
@@ -66,14 +66,14 @@ export class SecureStorageService {
 
       // Read the encrypted credentials
       const encryptedCredentials = fs.readFileSync(this.credentialsPath);
-      
+
       // Decrypt the credentials
       const decryptedCredentials = safeStorage.decryptString(encryptedCredentials);
-      
+
       // Parse and return the credentials
       return JSON.parse(decryptedCredentials) as SecureCredentials;
     } catch (error) {
-      console.error('Error retrieving credentials:', error);
+      console.error("Error retrieving credentials:", error);
       throw error;
     }
   }
@@ -87,7 +87,7 @@ export class SecureStorageService {
         fs.unlinkSync(this.credentialsPath);
       }
     } catch (error) {
-      console.error('Error clearing credentials:', error);
+      console.error("Error clearing credentials:", error);
       throw error;
     }
   }

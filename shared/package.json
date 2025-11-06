@@ -16,11 +16,9 @@
   ],
   "author": "Your Name",
   "license": "MIT",
-  "dependencies": {
-    "electron": "^39.1.0"
-  },
   "devDependencies": {
     "@types/node": "^24.10.0",
+    "electron": "39.1.0",
     "typescript": "^5.9.3"
   }
 }

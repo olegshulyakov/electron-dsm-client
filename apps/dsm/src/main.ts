@@ -1,13 +1,8 @@
-import { app, BrowserWindow, ipcMain, Menu, dialog, nativeImage } from 'electron';
-import * as path from 'path';
-import { SecureStorageService, createStandardWindow, isValidUrl, normalizeUrl } from '@electron-dsm-client/shared';
+import { createStandardWindow, isValidUrl, normalizeUrl, SecureStorageService } from "@electron-dsm-client/shared";
+import { app, BrowserWindow, dialog, ipcMain, Menu } from "electron";
+import * as path from "path";
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) {
-  app.quit();
-}
-
-const DSM_URL = 'https://www.synology.com/dsm';
+const DSM_URL = "https://www.synology.com/dsm";
 
 let mainWindow: BrowserWindow | null = null;
 let credentials: { serverUrl: string; username: string; password: string } | null = null;
@@ -16,23 +11,23 @@ const secureStorage = SecureStorageService.getInstance();
 
 const createWindow = (): void => {
   // Create the browser window
-  mainWindow = createStandardWindow('dsm', {
+  mainWindow = createStandardWindow("dsm", {
     width: 1200,
     height: 800,
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: true,
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(__dirname, "preload.js"),
     },
-    icon: path.join(__dirname, '../assets/icon.png')
+    icon: path.join(__dirname, "../assets/icon.png"),
   });
 
   // Load the index.html of the app
-  mainWindow.loadFile(path.join(__dirname, '../src/index.html'));
+  mainWindow.loadFile(path.join(__dirname, "../src/index.html"));
 
   // Open the DevTools in development mode
-  if (process.argv.includes('--dev') || process.env.NODE_ENV === 'development') {
+  if (process.argv.includes("--dev") || process.env.NODE_ENV === "development") {
     mainWindow.webContents.openDevTools();
   }
 };
@@ -46,12 +41,16 @@ app.whenReady().then(async () => {
       credentials = {
         serverUrl: storedCredentials.serverUrl,
         username: storedCredentials.username,
-        password: storedCredentials.password
+        password: storedCredentials.password,
       };
     }
-  } catch (error) {
-    console.error('Failed to retrieve stored credentials:', error);
-    dialog.showErrorBox('Error', 'Failed to retrieve stored credentials');
+  } catch (error: unknown) {
+    console.error("Failed to retrieve stored credentials:", error);
+    let errorMessage = "Failed to retrieve stored credentials";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    }
+    dialog.showErrorBox("Error", errorMessage);
   }
 
   // Create the main window
@@ -60,82 +59,82 @@ app.whenReady().then(async () => {
   // Set up application menu
   const menu = Menu.buildFromTemplate([
     {
-      label: 'DSM',
+      label: "DSM",
       submenu: [
-        { role: 'about' },
-        { type: 'separator' },
-        { role: 'services' },
-        { type: 'separator' },
-        { role: 'hide' },
-        { role: 'hideOthers' },
-        { role: 'unhide' },
-        { type: 'separator' },
-        { role: 'quit' }
-      ]
+        { role: "about" as const },
+        { type: "separator" as const },
+        { role: "services" as const },
+        { type: "separator" as const },
+        { role: "hide" as const },
+        { role: "hideOthers" as const },
+        { role: "unhide" as const },
+        { type: "separator" as const },
+        { role: "quit" as const },
+      ],
     },
     {
-      label: 'Edit',
+      label: "Edit",
       submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
-        { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        { role: 'selectAll' }
-      ]
+        { role: "undo" as const },
+        { role: "redo" as const },
+        { type: "separator" as const },
+        { role: "cut" as const },
+        { role: "copy" as const },
+        { role: "paste" as const },
+        { role: "selectAll" as const },
+      ],
     },
     {
-      label: 'View',
+      label: "View",
       submenu: [
-        { role: 'reload' },
-        { role: 'forceReload' },
-        { role: 'toggleDevTools' },
-        { type: 'separator' },
-        { role: 'resetZoom' },
-        { role: 'zoomIn' },
-        { role: 'zoomOut' },
-        { type: 'separator' },
-        { role: 'togglefullscreen' }
-      ]
+        { role: "reload" as const },
+        { role: "forceReload" as const },
+        { role: "toggleDevTools" as const },
+        { type: "separator" as const },
+        { role: "resetZoom" as const },
+        { role: "zoomIn" as const },
+        { role: "zoomOut" as const },
+        { type: "separator" as const },
+        { role: "togglefullscreen" as const },
+      ],
     },
     {
-      label: 'Window',
+      label: "Window",
       submenu: [
-        { role: 'minimize' },
-        { role: 'zoom' },
-        ...(process.platform === 'darwin' ? [
-          { type: 'separator' },
-          { role: 'front' }
-        ] : []),
-        { type: 'separator' },
-        { role: 'close' }
-      ]
-    }
+        { role: "minimize" as const },
+        { role: "zoom" as const },
+        ...(process.platform === "darwin" ? [{ type: "separator" as const }, { role: "front" as const }] : []),
+        { type: "separator" as const },
+        { role: "close" as const },
+      ],
+    },
   ]);
   Menu.setApplicationMenu(menu);
 
   // Handle IPC events from renderer
-  ipcMain.handle('get-credentials', async () => {
+  ipcMain.handle("get-credentials", async () => {
     return credentials;
   });
 
-  ipcMain.handle('save-credentials', async (event, newCredentials) => {
+  ipcMain.handle("save-credentials", async (event, newCredentials) => {
     try {
       await secureStorage.storeCredentials({
         serverUrl: newCredentials.serverUrl,
         username: newCredentials.username,
-        password: newCredentials.password
+        password: newCredentials.password,
       });
       credentials = newCredentials;
       return { success: true };
-    } catch (error) {
-      console.error('Failed to save credentials:', error);
-      return { success: false, error: error.message };
+    } catch (error: unknown) {
+      console.error("Failed to save credentials:", error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error occurred",
+      };
     }
   });
 
-  ipcMain.handle('load-dsm-url', async (event, url) => {
+  ipcMain.handle("load-dsm-url", async (event, url) => {
     if (mainWindow && url) {
       try {
         const normalizedUrl = normalizeUrl(url);
@@ -143,17 +142,20 @@ app.whenReady().then(async () => {
           mainWindow.loadURL(normalizedUrl);
           return { success: true };
         } else {
-          return { success: false, error: 'Invalid URL' };
+          return { success: false, error: "Invalid URL" };
         }
-      } catch (error) {
-        return { success: false, error: error.message };
+      } catch (error: unknown) {
+        return {
+          success: false,
+          error: error instanceof Error ? error.message : "Unknown error occurred",
+        };
       }
     }
-    return { success: false, error: 'Main window not available or URL not provided' };
+    return { success: false, error: "Main window not available or URL not provided" };
   });
 
   // On macOS, re-create a window when the dock icon is clicked
-  app.on('activate', () => {
+  app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
@@ -161,13 +163,13 @@ app.whenReady().then(async () => {
 });
 
 // Quit when all windows are closed, except on macOS
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });
 
 // Cleanup when app quits
-app.on('quit', () => {
+app.on("quit", () => {
   mainWindow = null;
 });

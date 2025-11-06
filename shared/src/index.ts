@@ -1,2 +1,2 @@
-export { SecureStorageService, SecureCredentials } from './utils/safe-storage';
-export * from './utils';
+export { SecureStorageService, SecureCredentials } from "./utils/safe-storage";
+export * from "./utils";
