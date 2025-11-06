@@ -107,11 +107,11 @@ app.on('certificate-error', (event, webContents, url, error, certificate, callba
 });
 
 // Quit when all windows are closed.
-// app.on('window-all-closed', function () {
-//   // On macOS it is common for applications and their menu bar
-//   // to stay active until the user quits explicitly with Cmd + Q
-//   app.quit()
-// })
+app.on('window-all-closed', function () {
+  // On macOS it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  app.quit()
+})
 
 app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
