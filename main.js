@@ -61,29 +61,6 @@ function editConfig() {
 }
 
 function registerShortcut() {
-    // const SynologyAudioStationControlScript = {
-    //     play: 'SYNO.SDS.AudioStation.Window.getPanelScope("SYNO.SDS.AudioStation.Main").audioPlayer.doPlay()',
-    //     stop: 'SYNO.SDS.AudioStation.Window.getPanelScope("SYNO.SDS.AudioStation.Main").audioPlayer.doStop()',
-    //     previous: 'SYNO.SDS.AudioStation.Window.getPanelScope("SYNO.SDS.AudioStation.Main").audioPlayer.doPrevious()',
-    //     next: 'SYNO.SDS.AudioStation.Window.getPanelScope("SYNO.SDS.AudioStation.Main").audioPlayer.doNext()',
-    // }
-
-    // globalShortcut.register("MediaPlayPause", () => {
-    //     mainWindow.webContents.executeJavaScript(SynologyAudioStationControlScript.play);
-    // });
-
-    // globalShortcut.register('MediaPreviousTrack', () => {
-    //     mainWindow.webContents.executeJavaScript(SynologyAudioStationControlScript.previous);
-    // });
-
-    // globalShortcut.register("MediaNextTrack", () => {
-    //     mainWindow.webContents.executeJavaScript(SynologyAudioStationControlScript.next);
-    // });
-
-    // globalShortcut.register("MediaStop", () => {
-    //     mainWindow.webContents.executeJavaScript(SynologyAudioStationControlScript.stop);
-    // });
-
     globalShortcut.register("CommandOrControl+E", () => {
         editConfig();
     });
